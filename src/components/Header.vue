@@ -16,17 +16,17 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#"> Portfolio <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Stocks</a></li>
+        <router-link tag="li"  to="/portfolio"><a> Portfolio </a></router-link>
+        <router-link tag="li"  to="/stocks"><a> Stocks </a></router-link>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><h6><strong>Funds: $10,000</strong></h6></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Save & Load <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="#">Save</a></li>
             <li><a href="#">Load</a></li>
           </ul>
+          <li><a><strong>Funds: $10,000</strong></a></li>
         </li>
       </ul>
     </div><!-- /.navbar-collapse -->
