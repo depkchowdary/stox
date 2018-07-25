@@ -20,6 +20,7 @@
         <router-link tag="li"  to="/stocks"><a> Stocks </a></router-link>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        <li><button class="btn btn-transparent">End Day</button></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Save & Load <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -36,10 +37,18 @@
 </template>
 
 <script>
-    export default {
+  export default {
 
-    }
+  }
 </script>
 
-<style>
+<style scoped>
+  .btn-transparent {
+    background-color: Transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+  }
 </style>
