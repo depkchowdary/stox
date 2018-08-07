@@ -2,14 +2,14 @@
     <div class="col-md-6 col-sm-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h6><span class="stock-name"><strong>{{stock.name}}</strong></span>(price:{{stock.price}}) </h6>
+        <h6><span class="stock-name"><strong>{{stock.name}}</strong></span>(price:{{stock.price}} | Quantity: {{stock.quantity}} ) </h6>
             </div>
             <div class="panel-body">
                 <form class="form-inline">
                   <div class="form-group">
                     <input type="text" class="form-control" placeholder="Quantity" v-model="quantity">
                   </div>
-                  <button type="submit" @click.prevent="bought" class="btn btn-success pull-right">Buy</button>
+                  <button type="submit" @click.prevent="sell" class="btn btn-danger pull-right">Sell</button>
                 </form>
             </div>
         </div> 
@@ -24,9 +24,14 @@
             }
         },
         methods: {
-            bought: function() {
-                console.log("Buy button clicked")
-                this.$store.commit('bought', { stock: this.stock, quantity: this.quantity })
+            sell: function() {
+                console.log("Sell button clicked")
+                if (this.quantity <= this.stock.quantity) {
+                    this.$store.commit('sell', { stock: this.stock, quantity: this.quantity, price: this.price })
+                }
+                else {
+                    alert('No short selling allowed. Sell the stock you own!')
+                }
             }
         }
     }

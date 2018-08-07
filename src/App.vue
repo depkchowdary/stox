@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <app-header></app-header>
+    <app-header @endDay="endDay"></app-header>
     <router-view></router-view>
   </div>
 </template>
@@ -10,6 +10,9 @@
     export default {
         components: {
             appHeader
+        },
+        endDay() {
+
         }
     }
 </script>

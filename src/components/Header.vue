@@ -20,14 +20,14 @@
         <router-link tag="li"  to="/stocks"><a> Stocks </a></router-link>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><button class="btn btn-transparent">End Day</button></li>
+        <li><button class="btn btn-transparent" @click="endDay">End Day</button></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Save & Load <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="#">Save</a></li>
             <li><a href="#">Load</a></li>
           </ul>
-          <li><a><strong>Funds: $10,000</strong></a></li>
+          <li><a><strong>Funds: {{funds}}</strong></a></li>
         </li>
       </ul>
     </div><!-- /.navbar-collapse -->
@@ -38,7 +38,16 @@
 
 <script>
   export default {
-
+    methods: {
+      endDay: function() {
+        this.$emit('endDay')
+      }
+    },
+    computed: {
+      funds: function() {
+        return this.$store.getters.funds
+      }
+    }
   }
 </script>
 
