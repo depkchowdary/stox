@@ -5,7 +5,7 @@
 </template>
 
 <script>
-    import appViewStock from './viewPort.vue'
+    import appViewStock from './stock.vue'
     export default {
         computed: {
             portfolio: function() {

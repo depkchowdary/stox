@@ -11,8 +11,10 @@
         components: {
             appHeader
         },
-        endDay() {
+        methods: {
+            endDay() {
 
+            }
         }
     }
 </script>

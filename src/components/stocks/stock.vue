@@ -9,7 +9,7 @@
                   <div class="form-group">
                     <input type="text" class="form-control" placeholder="Quantity" v-model="quantity">
                   </div>
-                  <button type="submit" @click.prevent="bought" class="btn btn-success pull-right">Buy</button>
+                  <button type="submit" @click.prevent="bought" class="btn btn-success pull-right" :disabled="Number.parseInt(quantity)<=0 || !Number.isInteger(Number.parseInt(quantity))">Buy</button>
                 </form>
             </div>
         </div> 
@@ -25,7 +25,6 @@
         },
         methods: {
             bought: function() {
-                console.log("Buy button clicked")
                 this.$store.commit('bought', { stock: this.stock, quantity: this.quantity })
             }
         }

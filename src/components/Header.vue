@@ -16,8 +16,8 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <router-link tag="li"  to="/portfolio"><a> Portfolio </a></router-link>
-        <router-link tag="li"  to="/stocks"><a> Stocks </a></router-link>
+        <router-link tag="li"  to="/portfolio" activeClass="active"><a> Portfolio </a></router-link>
+        <router-link tag="li"  to="/stocks" activeClass="active"><a> Stocks </a></router-link>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><button class="btn btn-transparent" @click="endDay">End Day</button></li>

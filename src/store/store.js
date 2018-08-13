@@ -6,18 +6,22 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
     state: {
         stocks: [{
+                id: 1,
                 name: "M&M",
                 price: 1400,
             },
             {
+                id: 2,
                 name: "HDFC",
                 price: 400,
             },
             {
+                id: 3,
                 name: "TCS",
                 price: 4400,
             },
             {
+                id: 4,
                 name: "Infosys",
                 price: 1300,
             }
@@ -25,11 +29,6 @@ export const store = new Vuex.Store({
         funds: 100000,
         portfolio: [
 
-            {
-                name: "Infosys",
-                price: 1300,
-                quantity: 10
-            }
         ],
     },
     getters: {
@@ -40,25 +39,43 @@ export const store = new Vuex.Store({
             var funds = "$" + state.funds.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             return funds;
         },
-        portfolio: function(state) {
-            console.log(state.portfolio)
-            return state.portfolio
+        portfolio: function(state, getters) {
+            return state.portfolio.map(stock => {
+                const record = getters.stocks.find(element => element.id == stock.id)
+                return {
+                    id: stock.id,
+                    quantity: stock.quantity,
+                    name: stock.name,
+                    price: stock.price,
+                    ltp: record.price
+                }
+            })
         }
     },
     mutations: {
         bought: function(state, payload) {
-            console.log("Bought mutation")
-            console.log(payload)
             let currentStock = {
+                id: payload.stock.id,
                 name: payload.stock.name,
                 price: payload.stock.price,
                 quantity: Number(payload.quantity)
             }
             if (state.funds > payload.stock.price) {
-                console.log("funds available")
+
+                let record = state.portfolio.find(function(el) {
+                    if (el.id === currentStock.id) {
+                        return el
+                    }
+                })
+
+                if (record) {
+                    record.price = Math.round((record.price * record.quantity + currentStock.price * currentStock.quantity) / (record.quantity + currentStock.quantity), 2)
+                    record.quantity += currentStock.quantity
+                }
+                else {
+                    state.portfolio.push(currentStock)
+                }
                 state.funds -= payload.stock.price * payload.quantity
-                state.portfolio.push(currentStock)
-                console.log(state.portfolio)
             }
             else {
 
@@ -75,7 +92,6 @@ export const store = new Vuex.Store({
             state.portfolio.forEach((stock, index) => {
                 console.log(stock)
                 if (stock.name === currentStock.stock) {
-                    console.log("Matched")
                     console.log(stock)
                     if (currentStock.quantity === stock.quantity) {
                         state.funds += currentStock.price * currentStock.quantity

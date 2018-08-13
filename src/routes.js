@@ -1,5 +1,5 @@
-import portfolio from './components/Portfolio.vue'
-import stocks from './components/Stocks.vue'
+import portfolio from './components/portfolio/portfolio.vue'
+import stocks from './components/stocks/stocks.vue'
 import landing from './components/landing.vue'
 
 export const routes = [
