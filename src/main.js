@@ -18,6 +18,9 @@ new Vue({
   mounted: function() {
     this.$store.dispatch('stockTrade')
   },
+  created: function() {
+    this.$store.dispatch('initStocks')
+  }
 
 
 })

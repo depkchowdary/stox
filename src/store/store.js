@@ -82,29 +82,23 @@ export const store = new Vuex.Store({
             }
         },
         sell: function(state, payload) {
-            console.log("Sell mutation")
-            console.log(payload)
-            let currentStock = {
-                name: payload.stock.name,
-                price: payload.stock.price,
-                quantity: Number(payload.quantity)
-            }
-            state.portfolio.forEach((stock, index) => {
-                console.log(stock)
-                if (stock.name === currentStock.stock) {
-                    console.log(stock)
-                    if (currentStock.quantity === stock.quantity) {
-                        state.funds += currentStock.price * currentStock.quantity
+            if (payload.quantity == payload.stock.quantity) {
+                state.portfolio.forEach((stock, index) => {
+                    if (payload.stock.id == stock.id) {
                         state.portfolio.splice(index, 1)
+                        state.funds += payload.stock.ltp * payload.quantity
                     }
-                    else {
-                        state.funds += currentStock.price * currentStock.quantity
-                        stock.quantity -= currentStock.quantity
+                })
+            }
+            else {
+                state.portfolio.forEach((stock, index) => {
+                    if (payload.stock.id == stock.id) {
+                        stock.quantity -= payload.quantity
+                        state.funds += payload.stock.ltp * payload.quantity
                     }
-                }
-            })
+                })
+            }
         }
-
     },
     actions: {
         stockTrade: function({ state }) {
@@ -113,6 +107,9 @@ export const store = new Vuex.Store({
                     stock.price += randInt(stock.price)
                 }, 1000)
             })
+        },
+        initStocks: function({ state }) {
+            console.log('stocks intialized')
         }
     },
     models: {
