@@ -5,27 +5,7 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
     state: {
-        stocks: [{
-                id: 1,
-                name: "M&M",
-                price: 1400,
-            },
-            {
-                id: 2,
-                name: "HDFC",
-                price: 400,
-            },
-            {
-                id: 3,
-                name: "TCS",
-                price: 4400,
-            },
-            {
-                id: 4,
-                name: "Infosys",
-                price: 1300,
-            }
-        ],
+        stocks: [],
         funds: 100000,
         portfolio: [
 
@@ -101,15 +81,17 @@ export const store = new Vuex.Store({
         }
     },
     actions: {
-        stockTrade: function({ state }) {
-            state.stocks.forEach((stock) => {
-                setInterval(function() {
-                    stock.price += randInt(stock.price)
-                }, 1000)
-            })
-        },
         initStocks: function({ state }) {
-            console.log('stocks intialized')
+            db.collection('stocks').get().then((snapshot) => {
+                snapshot.docs.forEach((stock) => {
+                    state.stocks.push(stock.data())
+                })
+                state.stocks.forEach((stock) => {
+                    setInterval(function() {
+                        stock.price += randInt(stock.price)
+                    }, 1000)
+                })
+            })
         }
     },
     models: {

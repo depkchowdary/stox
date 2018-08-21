@@ -15,9 +15,7 @@ new Vue({
   render: h => h(App),
   router,
   store,
-  mounted: function() {
-    this.$store.dispatch('stockTrade')
-  },
+  mounted: function() {},
   created: function() {
     this.$store.dispatch('initStocks')
   }
