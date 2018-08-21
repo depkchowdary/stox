@@ -20,11 +20,11 @@
         <router-link tag="li"  to="/stocks" activeClass="active"><a> Stocks </a></router-link>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><button class="btn btn-transparent" @click="endDay">End Day</button></li>
+        <li><button class="btn btn-transparent">End Day</button></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Save & Load <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Save</a></li>
+            <li @click="saveData"><a href="#">Save</a></li>
             <li><a href="#">Load</a></li>
           </ul>
           <li><a><strong>Funds: {{funds}}</strong></a></li>
@@ -46,6 +46,12 @@
     computed: {
       funds: function() {
         return this.$store.getters.funds
+      }
+    },
+    methods: {
+      saveData: function() {
+        console.log("clicked on save data from drop down")
+        this.$store.dispatch('saveData')
       }
     }
   }

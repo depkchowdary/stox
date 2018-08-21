@@ -7,9 +7,7 @@ export const store = new Vuex.Store({
     state: {
         stocks: [],
         funds: 100000,
-        portfolio: [
-
-        ],
+        portfolio: [],
     },
     getters: {
         stocks: function(state) {
@@ -23,6 +21,7 @@ export const store = new Vuex.Store({
             return state.portfolio.map(stock => {
                 const record = getters.stocks.find(element => element.id == stock.id)
                 return {
+                    fireBaseId: stock.fireBaseId,
                     id: stock.id,
                     quantity: stock.quantity,
                     name: stock.name,
@@ -35,6 +34,7 @@ export const store = new Vuex.Store({
     mutations: {
         bought: function(state, payload) {
             let currentStock = {
+                fireBaseId: payload.stock.fireBaseId,
                 id: payload.stock.id,
                 name: payload.stock.name,
                 price: payload.stock.price,
@@ -84,7 +84,12 @@ export const store = new Vuex.Store({
         initStocks: function({ state }) {
             db.collection('stocks').get().then((snapshot) => {
                 snapshot.docs.forEach((stock) => {
-                    state.stocks.push(stock.data())
+                    state.stocks.push({
+                        fireBaseId: stock.id,
+                        id: stock.data().id,
+                        name: stock.data().name,
+                        price: stock.data().price
+                    })
                 })
                 state.stocks.forEach((stock) => {
                     setInterval(function() {
@@ -92,6 +97,38 @@ export const store = new Vuex.Store({
                     }, 1000)
                 })
             })
+        },
+        saveData({ state }) {
+            state.portfolio.forEach((stock) => {
+                // Add a new document in collection "cities"
+                db.collection("portfolio").doc(stock.fireBaseId).set({
+                        id: stock.id,
+                        name: stock.name,
+                        quantity: stock.quantity,
+                        price: stock.price
+                    })
+                    .then(function() {
+                        console.log("Document successfully written!");
+                    })
+                    .catch(function(error) {
+                        console.error("Error writing document: ", error);
+                    });
+
+            })
+            state.stocks.forEach((stock) => {
+                db.collection("stocks").doc(stock.fireBaseId).set({
+                        id: stock.id,
+                        name: stock.name,
+                        price: stock.price
+                    })
+                    .then(function() {
+                        console.log("Document successfully written!");
+                    })
+                    .catch(function(error) {
+                        console.error("Error writing document: ", error);
+                    });
+            })
+
         }
     },
     models: {
